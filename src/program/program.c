@@ -7,11 +7,13 @@
 #include <assert.h>
 #include <pthread.h>
 
+#define NUM_THREADS 16
+
 Program programCreate()
 {
     initRandomTable();
     Program this = {0};
-    this.image = ppmImageCreateFromAspectRatio(800, 16.0 / 9.0, "test.ppm");
+    this.image = ppmImageCreateFromAspectRatio(3000, 16.0 / 9.0, "test.ppm");
     this.camera = cameraCreate(this.image);
     this.spheresCount = 2;
     this.spheres = arrayCreate(10, sizeof(Sphere));
@@ -77,8 +79,6 @@ typedef struct
     Program program;
     Array *array;
 } ThreadInformation;
-
-#define NUM_THREADS 8
 
 void *processImageSlice(void *args)
 {
